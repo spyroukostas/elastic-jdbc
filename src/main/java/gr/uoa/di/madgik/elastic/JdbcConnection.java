@@ -6,7 +6,6 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.elasticsearch.client.RestClient;
 
 import javax.net.ssl.SSLContext;
@@ -170,7 +169,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
         checkClosed();
-        return new JdbcPreparedStatement(this, sql);
+        return new JdbcPreparedStatement(this, nativeSQL(sql));
     }
 
     /**
@@ -377,7 +376,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
     public PreparedStatement prepareStatement(String sql, int resultSetType,
                                               int resultSetConcurrency) throws SQLException {
         checkClosed();
-        return new JdbcPreparedStatement(this, sql, resultSetType, resultSetConcurrency, holdability);
+        return new JdbcPreparedStatement(this, nativeSQL(sql), resultSetType, resultSetConcurrency, holdability);
     }
 
     /**
@@ -590,7 +589,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
                                               int resultSetConcurrency,
                                               int resultSetHoldability) throws SQLException {
         checkClosed();
-        return new JdbcPreparedStatement(this, sql, resultSetType, resultSetConcurrency, resultSetHoldability);
+        return new JdbcPreparedStatement(this, nativeSQL(sql), resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
     /**

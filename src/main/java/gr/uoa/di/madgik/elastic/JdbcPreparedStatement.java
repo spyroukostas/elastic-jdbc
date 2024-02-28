@@ -20,12 +20,12 @@ public class JdbcPreparedStatement extends JdbcStatement implements PreparedStat
 
     public JdbcPreparedStatement(JdbcConnection con, String sql) {
         super(con);
-        this.sql = sql.endsWith(";") ? sql.substring(0, sql.length() - 1) : sql;
+        this.sql = sql;
     }
 
     public JdbcPreparedStatement(JdbcConnection con, String sql, int rsType, int rsConcurrency, int rsHoldability) throws SQLException {
         super(con, rsType, rsConcurrency, rsHoldability);
-        this.sql = sql.endsWith(";") ? sql.substring(0, sql.length() - 1) : sql;
+        this.sql = sql;
     }
 
 
@@ -47,6 +47,7 @@ public class JdbcPreparedStatement extends JdbcStatement implements PreparedStat
             } else
                 translated = translated.replaceFirst("\\?", parameters.get(i));
         }
+        // FIXME: move to nativeSQL?
         String[] parts = translated.split("GROUP BY", 2);
         if (parts[1].matches("\\s+[a-z0-9]+\\.[a-z0-9]+\\..*")) {
             translated = translated.split("GROUP BY", 2)[0];
