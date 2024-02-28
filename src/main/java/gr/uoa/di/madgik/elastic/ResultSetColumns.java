@@ -37,7 +37,7 @@ public class ResultSetColumns {
         if (index < 1 || index > rsColumns.size()) {
             throw new SQLException("Index out of bounds");
         }
-        return rsColumns.get(index);
+        return rsColumns.get(index - 1);
 
     }
 
