@@ -272,7 +272,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
      */
     @Override
     public boolean isClosed() {
-        return client == null || !((CloseableHttpAsyncClient) client.getHttpClient()).isRunning();
+        return client == null;
     }
 
     /**
@@ -359,7 +359,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
     @Override
     public void clearWarnings() throws SQLException {
         checkClosed();
-        throw new SQLFeatureNotSupportedException("clearWarnings() not implemented");
+        // no-op
     }
 
     /**

@@ -135,7 +135,7 @@ public class JdbcStatement extends JdbcWrapper implements Statement {
     @Override
     public void clearWarnings() throws SQLException {
         checkClosed();
-        throw new UnsupportedOperationException("Unsupported Operation");
+        // no-op
     }
 
     @Override

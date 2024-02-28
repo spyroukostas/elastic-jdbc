@@ -285,7 +285,7 @@ public class JdbcResultSet extends JdbcWrapper implements ResultSet {
     @Override
     public void clearWarnings() throws SQLException {
         checkClosed();
-        throw new UnsupportedOperationException("Unsupported Operation");
+        // no-op
     }
 
     @Override
