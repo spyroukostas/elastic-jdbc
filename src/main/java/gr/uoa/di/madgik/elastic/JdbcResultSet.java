@@ -2,6 +2,7 @@ package gr.uoa.di.madgik.elastic;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import gr.uoa.di.madgik.elastic.sql.ColumnInfo;
 import org.elasticsearch.client.Response;
 import org.json.simple.parser.JSONParser;
@@ -40,6 +41,7 @@ public class JdbcResultSet extends JdbcWrapper implements ResultSet {
 
     @SuppressWarnings("unchecked")
     public JdbcResultSet(JdbcStatement statement, Response response) throws SQLException {
+        this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         this.statement = statement;
         this.fetchSize = statement.getFetchSize();
         // TODO: refactor
@@ -1201,10 +1203,8 @@ public class JdbcResultSet extends JdbcWrapper implements ResultSet {
         if (type == null) {
             throw new SQLException("type is null");
         }
-        if (wasNull) {
-            return null;
-        }
-        return mapper.convertValue(getObject(columnIndex), type);
+        Object obj = getObject(columnIndex);
+        return mapper.convertValue(obj, type);
     }
 
     @Override
