@@ -61,7 +61,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
                     )
                     .build();
 
-            logger.info("Connected to: " + url);
+            logger.fine("Connected to: " + url);
             client = restClient;
 
         } catch (Exception e) {
