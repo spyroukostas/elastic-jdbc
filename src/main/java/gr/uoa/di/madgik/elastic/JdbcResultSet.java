@@ -102,8 +102,9 @@ public class JdbcResultSet extends JdbcWrapper implements ResultSet {
     @Override
     public boolean next() throws SQLException {
         checkClosed();
-        this.current = this.rowsIterator.hasNext() ? this.rowsIterator.next() : new ArrayList<>();
-        return this.rowsIterator.hasNext();
+        boolean hasNext = this.rowsIterator.hasNext();
+        this.current = hasNext ? this.rowsIterator.next() : new ArrayList<>();
+        return hasNext;
     }
 
     @Override
