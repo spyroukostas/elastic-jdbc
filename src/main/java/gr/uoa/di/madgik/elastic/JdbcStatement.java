@@ -63,7 +63,9 @@ public class JdbcStatement extends JdbcWrapper implements Statement {
     public void close() throws SQLException {
         if (!closed) {
             closed = true;
-            resultSet.close();
+            if (resultSet != null) {
+                resultSet.close();
+            }
         }
     }
 

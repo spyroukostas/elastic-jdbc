@@ -26,7 +26,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
 
     private final ReentrantLock lock = new ReentrantLock();
 
-    private final RestClient client;
+    private RestClient client;
     private Map<String, Class<?>> typeMap = new HashMap<>();
 
     private String catalog = null;
@@ -199,6 +199,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
         } catch (Throwable e) {
             throw logAndConvert(e);
         } finally {
+            client = null;
             unlock();
         }
     }
@@ -853,7 +854,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
     @Override
     public void setSchema(String schema) throws SQLException {
         checkClosed();
-        throw new UnsupportedOperationException("Unsupported Operation");
+//        throw new UnsupportedOperationException("Unsupported Operation");
     }
 
     /**
@@ -902,7 +903,6 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
     }
 
     /**
-     * <p><b>Unsupported Operation.</b></p>
      * <p>
      * Retrieves the number of milliseconds the driver will
      * wait for a database request to complete.
@@ -916,7 +916,7 @@ public class JdbcConnection extends JdbcWrapper implements Connection {
     @Override
     public int getNetworkTimeout() throws SQLException {
         checkClosed();
-        throw new UnsupportedOperationException("Unsupported Operation");
+        return 0;
     }
 
     /**
